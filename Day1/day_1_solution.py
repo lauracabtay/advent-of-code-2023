@@ -1,5 +1,6 @@
 
-word_to_nums = {
+# Allow to cover cases such as eightwo or nineight
+word_to_num = {
     "one": 'o1e',
     "two": 't2o',
     "three": 't3e',
@@ -35,8 +36,8 @@ def sum_calibration_values(values):
 def convert_input(input_values):
     converted_values = []
     for value in input_values:
-        for word, number in word_to_nums.items():
-            value = value.replace(word, f"{number}")
+        for word, number in word_to_num.items():
+            value = value.replace(word, number)
         converted_values.append(value)
 
     return converted_values
