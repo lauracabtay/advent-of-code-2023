@@ -1,4 +1,5 @@
 import re
+from day_4_solution_part_1 import get_played_numbers, get_winning_numbers
 
 
 def original_cards_count(card_pack):
@@ -6,18 +7,6 @@ def original_cards_count(card_pack):
     for index, card in enumerate(card_pack):
         card_count_dict[index + 1] = 1
     return card_count_dict
-
-
-def get_winning_numbers(card):
-    get_winning_numbers = re.search(': (.*) \|', card)
-    winning_numbers = get_winning_numbers.group(1).split()
-    return winning_numbers
-
-
-def get_played_numbers(card):
-    get_played_numbers = re.search('\| (.*)', card)
-    played_numbers = get_played_numbers.group(1).split()
-    return played_numbers
 
 
 def sum_card_copies_count(card_pack):
