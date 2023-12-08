@@ -1,4 +1,5 @@
 import re
+import itertools
 import math
 
 directions_mapping = {
@@ -6,10 +7,9 @@ directions_mapping = {
     "R": 1
 }
 
-with open('input.txt', 'r') as input_file:
-    file = input_file.read().split('\n')
-    instructions = file[0]
-    maps = file[2:]
+
+def parse_file(file_name):
+    maps = file_name[2:]
 
     network = {}
 
@@ -19,6 +19,31 @@ with open('input.txt', 'r') as input_file:
         right_child = re.search(r", (.*)\)", node).group(1)
 
         network[parent] = [left_child, right_child]
+
+    return network
+
+
+def count_steps_part_1(file_name, network):
+    instructions = file_name[0]
+
+    directions = itertools.cycle(instructions)
+    step_counter = 0
+
+    key = 'AAA'
+
+    for direction in directions:
+        if key == 'ZZZ':
+            break
+
+        direction_value = directions_mapping[direction]
+        key = network[key][direction_value]
+        step_counter += 1
+
+    return step_counter
+
+
+def count_steps_part_2(file_name, network):
+    instructions = file_name[0]
 
     all_step_counts = []
 
@@ -36,6 +61,13 @@ with open('input.txt', 'r') as input_file:
 
     least_common_multiple = math.lcm(*all_step_counts)
 
-    print(least_common_multiple)
+    return least_common_multiple
 
+
+with open('input.txt', 'r') as input_file:
+    file = input_file.read().split('\n')
+
+network_dict = parse_file(file)
+print(count_steps_part_1(file, network_dict))
+print(count_steps_part_2(file, network_dict))
 
